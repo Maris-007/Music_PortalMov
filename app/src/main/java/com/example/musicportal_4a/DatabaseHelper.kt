@@ -73,7 +73,29 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(
         return resultado != -1L
     }
 
+    //METODO PARA CONSULTAR USUARIO
+    fun iniciarSesion(correo : String, password: String) : Boolean {
 
+        val db = readableDatabase
+
+        val query_sql = """
+            SELECT * FROM $TABLEUSUARIOS 
+            WHERE $COL_CORREO = ? AND $COL_PASSWORD = ?
+            """.trimIndent()
+
+        //CREAR CURSOR PARA RECORRER LA INFORMACION
+
+        val cursor = db.rawQuery(
+            query_sql, arrayOf(correo, password)
+        )
+        //crear variable de tipo Bool que permist saber si el cursor encontro un registro
+        val usuarioEncontrado = cursor.count > 0
+        cursor.close()
+        db.close()
+
+        return usuarioEncontrado
+
+    }
 
 
 }

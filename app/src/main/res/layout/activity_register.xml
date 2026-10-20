@@ -61,7 +61,7 @@
                 android:paddingStart="20dp"
                 android:paddingEnd="15dp"
                 android:textColor="#3333"
-                android:textColorHint="#FFF"
+                android:textColorHint="#FFFF"
                 android:inputType="textEmailAddress"
                 android:drawablePadding="10dp"
                 android:drawableStart="@drawable/account"/>
