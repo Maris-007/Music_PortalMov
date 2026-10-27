@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -33,7 +34,8 @@ class MainActivity : AppCompatActivity() {
 
         //EVENTO PARA INICIAR SESION
         btnInicio.setOnClickListener {
-            // mTODO: Agregar metodo de inicio de sesion
+            //TODO: Agregar metodo de inicio de sesion
+            iniciarSesion()
         }
 
         tvCrearCuenta.setOnClickListener {
@@ -43,4 +45,35 @@ class MainActivity : AppCompatActivity() {
 
 
     }
+
+    //METODO PARA INICIAR SESION
+
+    private fun iniciarSesion() {
+        //Acceder a la informacion que escribe el usuario
+        val correo = etCorreo.text.toString().trim()
+        val pass = etPass.text.toString().trim()
+
+        if(correo.isEmpty() || pass.isEmpty()){
+            Toast.makeText(this, "Completa todos los campos", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        //Llamar al metodo de inicio de sesion en la db
+        val resultado = dbHelper.iniciarSesion(correo, pass)
+
+        if(resultado) {
+            //si la sesion es correcta
+            Toast.makeText(this, "BIENVENIDO", Toast.LENGTH_SHORT).show()
+            //Cambio de pantalla
+            val intent = Intent(this, HomeActivity::class.java)
+            startActivity(intent)
+            //cerrar la pantalla actual
+            finish()
+
+        } else {
+            //Si la sesion es incorrecta
+            Toast.makeText(this, "Datos incorrectos", Toast.LENGTH_SHORT).show()
+        }
+    }
+
 }
